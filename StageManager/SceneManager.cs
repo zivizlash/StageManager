@@ -56,7 +56,7 @@ namespace StageManager
 					WindowStrategy.Show(w);
 			}
 
-			_desktop.ShowIcons();
+			_desktop.RestoreIconsVisible();
 		}
 
 		private void WindowsManager_WindowUpdated(IWindow window, WindowUpdateType type)

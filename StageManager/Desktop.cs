@@ -23,7 +23,14 @@ namespace StageManager
 		private const int WM_COMMAND = 0x111;
 		private IntPtr _desktopViewHandle;
 
-		public void TrySetDesktopView(IntPtr handle)
+		private bool _initialIconsVisible;
+
+        public Desktop()
+        {
+			_initialIconsVisible = GetDesktopIconsVisible();
+        }
+
+        public void TrySetDesktopView(IntPtr handle)
 		{
 			var buffer = new StringBuilder(255);
 			Win32.GetClassName(handle, buffer, buffer.Capacity + 1);
@@ -87,6 +94,12 @@ namespace StageManager
 				}
 			}
 			return hShellViewWin;
+		}
+
+		public void RestoreIconsVisible()
+		{
+			if (GetDesktopIconsVisible() != _initialIconsVisible)
+				ToggleDesktopIcons();
 		}
 
 		public bool HasDesktopView => _desktopViewHandle != IntPtr.Zero;
